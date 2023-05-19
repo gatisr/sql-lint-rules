@@ -1,0 +1,13 @@
+{
+  "sqlfluff.config": "C:/projects/config/.sqlfluff",
+  "sqlfluff.executablePath": "sqlfluff",
+  "sqlfluff.linter.diagnosticSeverity": "warning",
+  /* Linter */
+  "sqlfluff.linter.run": "onType",
+  // "sqlfluff.experimental.format.executeInTerminal": true,
+  /* Formatter */
+  "sqlfluff.format.arguments": [
+    "--FIX-EVEN-UNPARSABLE"
+  ],
+  "sqlfluff.format.enabled": true,
+}

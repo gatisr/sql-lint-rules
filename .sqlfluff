@@ -1,0 +1,87 @@
+[sqlfluff]
+# Supported dialects https://docs.sqlfluff.com/en/stable/dialects.html
+dialect = postgres
+templater = jinja
+sql_file_exts = .sql,.sql.j2,.dml,.ddl
+
+# The standard max_line_length is 80 in line with the convention of
+# other tools and several style guides. Many projects however prefer
+# something a little longer.
+# Set to zero or negative to disable checks.
+max_line_length = 120
+
+# CPU processes to use while linting.
+# The default is "single threaded" to allow easy debugging, but this
+# is often undesirable at scale.
+# If positive, just implies number of processes.
+# If negative or zero, implies number_of_cpus - specified_number.
+# e.g. -1 means use all processors but one. 0 means all cpus.
+processes = -1
+
+# Very large files can make the parser effectively hang.
+# The more efficient check is the _byte_ limit check which
+# is enabled by default. The previous _character_ limit check
+# is still present for backward compatibility. This will be
+# removed in a future version.
+# Set either to 0 to disable.
+large_file_skip_char_limit = 0
+large_file_skip_byte_limit = 0
+
+[sqlfluff:indentation]
+# While implicit indents are not enabled by default. Many of the
+# SQLFluff maintainers do use them in their projects.
+indent_unit = space
+tab_space_size = 2
+indented_joins = false
+indented_ctes = false
+indented_using_on = true
+indented_on_contents = true
+indented_then = true
+indented_then_contents = true
+allow_implicit_indents = false
+template_blocks_indent = true
+# This is a comma seperated list of elements to skip
+# indentation edits to.
+skip_indentation_in = script_content
+# If comments are found at the end of long lines, we default to moving
+# them to the line _before_ their current location as the convention is
+# that a comment precedes the line it describes. However if you prefer
+# comments moved _after_, this configuration setting can be set to "after".
+trailing_comments = before
+
+# Layout configuration
+# See https://docs.sqlfluff.com/en/stable/layout.html#configuring-layout-and-spacing
+[sqlfluff:layout:type:comma]
+spacing_before = touch
+line_position = trailing
+
+# The default configuration for aliasing rules is "consistent"
+# which will auto-detect the setting from the rest of the file. This
+# is less desirable in a new project and you may find this (slightly
+# more strict) setting more useful.
+[sqlfluff:rules:aliasing.table]
+aliasing = explicit
+[sqlfluff:rules:aliasing.column]
+aliasing = explicit
+[sqlfluff:rules:aliasing.length]
+min_alias_length = 3
+
+# The default configuration for capitalisation rules is "consistent"
+# which will auto-detect the setting from the rest of the file. This
+# is less desirable in a new project and you may find this (slightly
+# more strict) setting more useful.
+# Typically we find users rely on syntax highlighting rather than
+# capitalisation to distinguish between keywords and identifiers.
+# Clearly, if your organisation has already settled on uppercase
+# formatting for any of these syntax elements then set them to "upper".
+# See https://stackoverflow.com/questions/608196/why-should-i-capitalize-my-sql-keywords-is-there-a-good-reason
+[sqlfluff:rules:capitalisation.keywords]
+capitalisation_policy = lower
+[sqlfluff:rules:capitalisation.identifiers]
+extended_capitalisation_policy = lower
+[sqlfluff:rules:capitalisation.functions]
+extended_capitalisation_policy = lower
+[sqlfluff:rules:capitalisation.literals]
+capitalisation_policy = lower
+[sqlfluff:rules:capitalisation.types]
+extended_capitalisation_policy = lower
